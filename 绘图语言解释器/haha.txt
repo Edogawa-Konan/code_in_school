@@ -1,0 +1,40 @@
+//sin
+scale is (40,40);
+rot is 0;
+origin is (0,40);
+for t from 0 to 4*pi+pi/50 step pi/30 draw(t,sin(t));
+origin is (0,0);
+for t from 0 to 4*pi+pi/50 step pi/30 draw(t,sin(t));
+origin is (0,-40);
+for t from 0 to 4*pi+pi/50 step pi/30 draw(t,sin(t));
+
+//tai ji
+origin is (300,300);
+scale is (200,200);
+rot is 0;
+for T from 0 to 2*pi step pi/70 draw (cos(t), sin(t));
+
+
+origin is (300,200);
+scale is (30,30);
+rot is 0;
+for t from 0 to 2*pi step pi/15 draw (cos(t), sin(t));
+
+
+origin is (300,400);
+scale is (30,30);
+rot is 0;
+for t from 0 to 2*pi step pi/15 draw (cos(t), sin(t));
+
+
+origin is (300,200);
+scale is (100,100);
+rot is pi/2;
+for t from -pi to 0 step pi/50 draw (cos(t), sin(t));
+
+
+origin is (300,400);
+scale is (100,100);
+rot is 0;
+for t from -pi/2 to pi/2 step pi/50 draw (cos(t), sin(t));
+
