@@ -16,6 +16,7 @@ from django.utils import timezone
 
 
 def index(request):
+    Init(request.user)
     return redirect('view_book_list',permanent=True)
 
 def signup(request):
@@ -423,8 +424,19 @@ def add_img(request):
     }
     return render(request, 'management/add_img.html', content)
 
-
-
+@user_passes_test(permission_check)
+def modify_fine(request):
+    content={'state':None}
+    if request.method=='POST':
+        unit=request.POST.get('unit')
+        with open("E:\\code_in_school\\LibraryManagement\\config.json", 'w') as f:
+            json.dump({'unit':unit},f)
+        content['state']='success'
+    else:
+        with open("E:\\code_in_school\\LibraryManagement\\config.json", 'r') as f:
+            unit = json.load(f)['unit']
+            content['unit'] = unit
+    return render(request,'management/modify_fine.html',content)
 
 
 

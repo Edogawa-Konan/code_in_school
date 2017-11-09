@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^add_book_by_ISBN/$',views.add_book_by_ISBN,name='add_book_by_ISBN'),
     url(r'^add_img/$', views.add_img, name='add_img'),
     url(r'^borrowe/$',views.borrowe,name='borrowe'),
+    url(r'^modify_fine/$',views.modify_fine,name='modify_fine'),
     url(r'^return_book/$',views.return_book,name='return_book'),
     url(r'^confirm/(\d+)$',views.confirm,name='confirm'),
     url(r'^check_message/$',views.check_message,name='check_message'),
