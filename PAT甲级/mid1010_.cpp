@@ -31,19 +31,24 @@ int main()
         a=sum(n2,radix);
         b=n1;
     }
-    search(a,b);
+    binarysearch(a,b);
     return 0;
 }
 
 
 void binarysearch(long long a,const string & b)
-{
+{//二分法
     long long low=find_largest(b),mid,tmp;
     long long high=max(low,a)+1;
     while(low<=high)
     {
         mid=(low+high)/2;
         tmp=sum(b,mid);
+        if(tmp<0)
+        {//溢出了，，及其重要！！！
+            high=mid-1;
+            continue;
+        }
         if(tmp<a)
         {
             low=mid+1;
@@ -55,14 +60,14 @@ void binarysearch(long long a,const string & b)
         else
         {
             printf("%lld",mid);
-            return ;
+            return;
         }
     }
     printf("Impossible");
 }
 
 void search(long long a,const string & b)
-{
+{//暴力搜索
     long long tmp=-1,r=find_largest(b);
     while(tmp!=a)
     {
@@ -78,7 +83,7 @@ void search(long long a,const string & b)
 }
 
 long long sum(const string &number,long long radix)
-{
+{//给定数字和基数求其值
     long long res=0;
     int bit=0;
     for (long long i=number.size()-1;i>=0;--i)
@@ -90,7 +95,7 @@ long long sum(const string &number,long long radix)
 }
 
 void process(string & input)
-{
+{//对输入的字符串进行预处理
     for (long long i =input.size()-1;i>=0;--i)
     {
         if(input[i]>='0'&&input[i]<='9')

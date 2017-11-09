@@ -1,0 +1,43 @@
+{% extends "management/base.html" %}
+{% load staticfiles %}
+
+{% block title %}User information{% endblock %}
+
+{% block content %}
+
+        <h2 class="text-center">Sort by nickname</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <table class="table table-striped table-hover table-bordered">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                            <th>username</th>
+                          <th>nickname</th>
+                          <th>email</th>
+                            <th>balance</th>
+                            <th>Operate</th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                     {% for u in user_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ u.user.username }}</td>
+                            <td>{{ u.nickname }}</td>
+                            <td>{{ u.user.email }}</td>
+                            <td>{{ u.balance }}</td>
+                            <td><a class="btn btn-warning" href="{% url 'edit_user' u.id %}">Modify this user</a>&nbsp; &nbsp;<a class="btn btn-danger" href="{% url 'del_user' %}?user_id={{ u.id }}">Delete this user</a></td>
+                        </tr>
+                     {% empty %}
+                         <tr>There is no user yet!</tr>
+                     {% endfor %}
+
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+

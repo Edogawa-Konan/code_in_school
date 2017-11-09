@@ -54,6 +54,7 @@ int main()
         if(u==-1)
             break;
         visit[u]=true;
+
         for (int v=0;v<=N;++v)
         {
             if(!visit[v]&&G[u][v]!=inf)
@@ -105,9 +106,6 @@ void DFS(int v)
                 {
                     back-=odd;
                 }
-            } else
-            {
-                continue;
             }
         }
         if(take<min_take)
@@ -115,7 +113,7 @@ void DFS(int v)
             min_take=take;
             min_back=back;
             path=tmp_path;
-        } else if(min_back==take&&back<min_back)
+        } else if(min_take==take&&back<min_back)
         {
             min_back=back;
             path=tmp_path;

@@ -1,0 +1,75 @@
+{% extends "management/base.html" %}
+{% load staticfiles %}
+{% block title %}Modify the user information{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
+                {% if state == 'success' %}
+                    <div class="well">
+                        <h2 class="text-success text-center">Successfully modified!</h2>
+                    </div>
+                {% endif %}
+                <form method="POST" role="form" class="form-horizontal">
+                    {% csrf_token %}
+                    <h1 class="form-signin-heading text-center">Modify the user</h1>
+
+                    <div class="form-group">
+                        <label for="id_username" class="col-md-3 control-label">User name：</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="{{ user.user.username }}" id="id_username" required name="username" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_nickname" class="col-md-3 control-label">nickname：</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="{{ user.nickname }}" required name="nickname" id="id_nickname">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_email" class="col-md-3 control-label">Email：</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="{{ user.user.email }}" required name="email" id="id_email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_recharge" class="col-md-3 control-label">Recharge：</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="0" required name="recharge" id="id_recharge">
+                        </div>
+                    </div>
+
+
+{#                    <div class="form-group">#}
+{#                        <label for="id_state" class="col-md-3 control-label">State:</label>#}
+{#                        <div class="col-md-9">#}
+{#                            <div class="radio">#}
+{#                                {% if user.permission == 0 %}#}
+{#                                    <label><input type="radio" value="activate"  required name="state" id="id_state">Activate</label>#}
+{#                                    <label><input type="radio" value="deactivate" checked="checked" required name="state" id="id_state">Deactivate</label>#}
+{#                                {% else %}#}
+{#                                    <label><input type="radio" value="activate" checked="checked" required name="state" id="id_state">Activate</label>#}
+{#                                    <label><input type="radio" value="deactivate" required name="state" id="id_state">Deactivate</label>#}
+{#                                {% endif %}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            <button class="btn btn btn-primary btn-block" type="submit">submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -8,13 +8,13 @@
 using namespace std;
 
 
-
 struct Table
 {
     int over_time;//结束时间
     int serve_count;//服务人数
     int tag;//VIP桌？
 };
+
 
 struct People
 {
@@ -23,30 +23,59 @@ struct People
     int serve_time;//开始服务时间
     int play_time;//玩了多久
 };
+
+int N,K,M;
+vector<People> p;
+vector<Table> t;//K张桌子1~K
+
+
 bool cmp(const People& o1,const People& o2)
-{
+{//根据到达时间进行排序
     return o1.arrive_time<o2.arrive_time;
 }
 
 bool cmp2(const People& o1,const People& o2)
-{
+{//根据服务开始时间进行排序
     return o1.serve_time<o2.serve_time;
 }
 
+int Find_next_vip(int vip)
+{
+    vip++;
+    for (;vip!=p.size()&&p[vip].tag==0;vip++);
+    return vip;
+}
+
+void Allocate_table(int current,int point)
+{
+    if(p[current].arrive_time<t[point].over_time)
+    {
+        p[current].serve_time=t[point].over_time;
+    } else
+    {
+        p[current].serve_time=p[current].arrive_time;
+    }
+    t[point].over_time=p[current].play_time+p[current].serve_time;
+    t[point].serve_count++;
+}
+
+
 int main()
 {
-    int N,K,M;
     scanf("%d",&N);
-    vector<People> p(N);
+    People tmp;
     for (int i=0,h,m,s,play;i<N;++i)
     {
-        scanf("%d:%d:%d %d %d",&h,&m,&s,&play,&p[i].tag);
-        p[i].arrive_time=h*3600+m*60+s;
-        p[i].serve_time=-2;//表示还没有被计算过
-        p[i].play_time=play*60;
+        scanf("%d:%d:%d %d %d",&h,&m,&s,&play,&tmp.tag);
+        tmp.arrive_time=h*3600+m*60+s;
+        if(tmp.arrive_time>=21*3600)
+            continue;
+        tmp.serve_time=21*3600;//表示还没有被计算过
+        tmp.play_time=play<120?play*60:7200;//最多2小时
+        p.push_back(tmp);
     }
     scanf("%d %d",&K,&M);
-    vector<Table> t(K+1);
+    t.resize(K+1);
     for (auto & e:t)//桌子们初始化
     {
         e.over_time=8*3600;//一开始所有桌子的结束时间初始化8时
@@ -58,71 +87,88 @@ int main()
         scanf("%d",&num);
         t[num].tag=1;
     }
-
     sort(p.begin(),p.end(),cmp);//按照来的顺序排队
 
-    for (int current=0;current<N;++current)
-    {//current是用户指针
-        if(p[current].serve_time!=-2)
-            continue;
-        int fast=99999999,point=-1;//point是桌子编号
-        for (int i=1;i<=K;i++)
-        {
-            if(t[i].over_time<fast)
+    int current=0,vip_index=-1;//当前队列的索引，下一个vip的索引
+    vip_index=Find_next_vip(vip_index);
+    while(current<p.size())
+    {//对队伍进行遍历
+        int point=0,min_end_time=999999;
+        for (int i=1;i<=K;++i)
+        {//用point指向最快结束的一桌
+            if(t[i].over_time<min_end_time)
             {
-                fast=t[i].over_time;
+                min_end_time=t[i].over_time;
                 point=i;
             }
         }
-        if(fast>=21*3600)
-        {
-            break;//后面的无法被服务了
+        if(min_end_time>=21*3600)//打烊了，不再接待新顾客
+            break;
+        if(p[current].tag==1&&current<vip_index)
+        {//中间优先安排的要过滤掉
+            current++;
+            continue;
         }
-        if(p[current].arrive_time<t[point].over_time)
-        {//需要排队时
-            if(t[point].tag==1)
-            {//这个桌子是vip桌，看看有没有vip在排队
-                for (int i=current;i<N&&p[current].arrive_time<t[point].over_time;++i)
+        if(t[point].tag==1)
+        {//下一个是vip桌
+            if(p[current].tag==1)
+            {//正好下一个人是VIP
+                Allocate_table(current,point);
+                vip_index=Find_next_vip(vip_index);
+                current++;
+            }
+            else
+            {
+                if(vip_index<p.size()&&p[vip_index].arrive_time<=t[point].over_time)
+                {//如果队伍后面还有vip则优先安排它到这个桌子
+                    Allocate_table(vip_index,point);
+                    vip_index=Find_next_vip(vip_index);
+                } else
                 {
-                    if(p[i].tag==1)
-                    {
-                        p[i].serve_time=t[point].over_time;
-                        t[point].over_time+=p[i].play_time;
-                        t[point].serve_count++;
-                        current--;//服务vip了，这个人就没被服务，
-                        goto next;
-                    }
+                    Allocate_table(current,point);
+                    current++;
                 }
             }
-            p[current].serve_time=t[point].over_time;//因为需要排队，开始服务时间就是轮到他的时候
-            t[point].over_time+=p[current].play_time;
-            t[point].serve_count++;
         }
         else
-        {
-            p[current].serve_time=p[current].arrive_time;//不需要排队时，开始服务时间就是到达时间
-            t[point].over_time=p[current].arrive_time+p[current].play_time;//这一点注意
-            t[point].serve_count+=1;
+        {//下一桌不是VIP桌
+            if(p[current].tag==0)
+            {//下一个人也不是VIP
+                Allocate_table(current,point);
+                current++;
+            } else
+            {//下一个人是VIP
+                int vip_point=-1,min_vip_end_time=99999999;
+                for (int i=1;i<=K;++i)
+                {
+                    if(t[i].tag==1&&t[i].over_time<min_vip_end_time)
+                    {
+                        vip_point=i;
+                        min_vip_end_time=t[i].over_time;
+                    }
+                }//先在vip桌中找，找不到就当作普通客人安排
+                if(vip_point!=-1&&p[current].arrive_time>=min_vip_end_time)
+                    Allocate_table(current,vip_point);
+                else
+                    Allocate_table(current,point);
+
+                vip_index=Find_next_vip(vip_index);//更新下一个vip
+                current++;
+            }
         }
-        next:
-        continue;
     }
-
     sort(p.begin(),p.end(),cmp2);
-
-    for (int i=0;i<N;++i)
+    for (int i=0;i<p.size()&&p[i].serve_time<21*3600;i++)
     {
-        if(p[i].serve_time==-2)
-            continue;
-        printf("%02d:%02d:%02d %02d:%02d:%02d %.0f\n",p[i].arrive_time/3600,
-               p[i].arrive_time%3600/60,p[i].arrive_time%60,p[i].serve_time/3600,p[i].serve_time%3600/60,
-               p[i].serve_time%60,round((p[i].serve_time-p[i].arrive_time)/60.0));
+        printf("%02d:%02d:%02d ",p[i].arrive_time/3600,p[i].arrive_time%3600/60,p[i].arrive_time%60);
+        printf("%02d:%02d:%02d ",p[i].serve_time/3600,p[i].serve_time%3600/60,p[i].serve_time%60);
+        printf("%.0f\n",round((p[i].serve_time-p[i].arrive_time)/60.0));
     }
-    for (int i=1;i<=K;i++)
+    for (int i=1;i<=K;++i)
     {
-        if(i!=1)
-            printf(" ");
         printf("%d",t[i].serve_count);
+        if(i!=K)
+            printf(" ");
     }
     return 0;
 }

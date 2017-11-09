@@ -1,0 +1,90 @@
+{% extends "management/base.html" %}
+{% load staticfiles %}
+{% block title %}Add Book{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
+                {% if state == 'success' %}
+                    <div class="well">
+                        <h2 class="text-success text-center">Added successfully</h2>
+                    </div>
+                {% endif %}
+                <form method="POST" role="form" class="form-horizontal">
+                    {% csrf_token %}
+                    <h1 class="form-signin-heading text-center">Add a book</h1>
+
+                    <div class="form-group">
+                        <label for="id_name" class="col-md-3 control-label">Book name：</label>
+                        <div class="col-md-9">
+                            <input type="text" value="{{ name }}" class="form-control" id="id_name" required name="name" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_author" class="col-md-3 control-label">Author：</label>
+                        <div class="col-md-9">
+                            <input type="text" value="{{ author }}" class="form-control" required name="author" id="id_author">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_category" class="col-md-3 control-label">Category：</label>
+                        <div class="col-md-9">
+                            <input type="text"  class="form-control" required name="category" id="id_category">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_price" class="col-md-3 control-label">price：</label>
+                        <div class="col-md-9">
+                            <input type="text" value="{{ price }}" class="form-control" required name="price" id="id_price">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_pubdate" class="col-md-3 control-label">Publish date：</label>
+                        <div class="col-md-9">
+                            {% if pubdate  %}
+                                <input type="text" value="{{ pubdate }}" class="form-control" required name="publish_date" id="id_pubdate">
+                            {% else %}
+                                <input type="date"  class="form-control" required name="publish_date" id="id_pubdate">
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_location" class="col-md-3 control-label">Location:</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" required name="location" id="id_location">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_number" class="col-md-3 control-label">number：</label>
+                        <div class="col-md-9">
+                            <input type="text" value="1" class="form-control" required name="number" id="id_number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_ISBN" class="col-md-3 control-label">ISBN:</label>
+                        <div class="col-md-9">
+                            <input type="text" value="{{ ISBN }}" class="form-control" required name="ISBN" id="id_ISBN">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            <button class="btn btn btn-primary btn-block" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

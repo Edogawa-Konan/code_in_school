@@ -1,0 +1,34 @@
+{% extends "management/base.html" %}
+{% load staticfiles %}
+{% block title %}Add Book{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
+
+                <form method="POST" role="form" class="form-horizontal">
+                    {% csrf_token %}
+                    <h1 class="form-signin-heading text-center">Add a book</h1>
+
+                    <div class="form-group">
+                        <label for="id_ISBN" class="col-md-3 control-label">ISBN：</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" required name="ISBN" id="id_ISBN">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            <button class="btn btn btn-primary btn-block" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
