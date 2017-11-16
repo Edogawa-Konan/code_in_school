@@ -1,6 +1,6 @@
 {% extends "management/base.html" %}
 {% load staticfiles %}
-{% block title %}查看图书{% endblock %}
+{% block title %}Lookup book{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
                 <div class="col-md-2">
                     <div class="list-group">
                         <a href="{% url 'view_book_list' %}" class="list-group-item" id="id_category_all">
-                            全部图书
+                            Category
                         </a>
                         {% for category in category_list %}
                             <a href="{% url 'view_book_list' %}?category={{ category }}" class="list-group-item"
@@ -80,18 +80,20 @@
                         <ul class="pager">
                             {% if book_list.has_previous %}
                                 <li class="previous"><a
-                                        href="?typ={{ query_category }}&page={{ book_list.previous_page_number }}">上一页</a>
+                                        href="?typ={{ query_category }}&page={{ book_list.previous_page_number }}">Previous
+                                    page</a>
                                 </li>
                             {% else %}
-                                <li class="previous disabled"><a href="#">上一页</a></li>
+                                <li class="previous disabled"><a href="#">Previous page</a></li>
                             {% endif %}
-                            第 {{ book_list.number }} / {{ book_list.paginator.num_pages }}页
+                            page {{ book_list.number }} / {{ book_list.paginator.num_pages }}
                             {% if book_list.has_next %}
                                 <li class="next"><a
-                                        href="?typ={{ query_category }}&page={{ book_list.next_page_number }}">下一页</a>
+                                        href="?typ={{ query_category }}&page={{ book_list.next_page_number }}">Next
+                                    page</a>
                                 </li>
                             {% else %}
-                                <li class="next disabled"><a href="#">下一页</a></li>
+                                <li class="next disabled"><a href="#">Next page</a></li>
                             {% endif %}
                         </ul>
                     </nav>

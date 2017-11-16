@@ -2,11 +2,11 @@
 
 {% load staticfiles %}
 
-{% block title %}我的已经借阅的图书{% endblock %}
+{% block title %}My library has been borrowed{% endblock %}
 
 {% block content %}
 
-        <h2 class="text-center">下面是已经借阅的图书，点击归还</h2>
+    <h2 class="text-center">My library has been borrowed</h2>
         <div class="container">
             <div class="row">
                 <div class="col-md-7 col-md-offset-3">
@@ -18,7 +18,6 @@
                             <th>Borrow time</th>
                           <th>Deadline</th>
                             <th>Fine</th>
-                            <th>Operate</th>
                         </tr>
                       </thead>
                     <tbody>
@@ -29,7 +28,6 @@
                             <td>{{ t.1 }}</td>
                             <td>{{ t.2 }}</td>
                             <td>{{ t.3 }}</td>
-                            <td><a class="btn btn-sm btn-success " href="{% url 'return_book' %}?book_id={{ t.0.id }}">return</a></td>
                         </tr>
                      {% empty %}
                          <tr>You have not borrowed books!</tr>
@@ -40,3 +38,4 @@
             </div>
         </div>
 {% endblock %}
+
