@@ -16,7 +16,6 @@ from django.utils import timezone
 
 
 def index(request):
-    Init(request.user)
     return redirect('view_book_list',permanent=True)
 
 def signup(request):
@@ -59,6 +58,9 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
+
+            Init() #这里数据同步
+
             return HttpResponseRedirect(reverse('view_book_list'))
         else:
             state = 'not_exist_or_password_error'
