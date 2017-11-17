@@ -395,36 +395,39 @@ def edit_user(request,user_pk):
 def del_user(request):
     user_pk=request.GET.get('user_id')
     item=MyUser.objects.get(pk=user_pk)
-    item.user.delete() #别忘记删除User表的表项
-    item.delete()
-    return HttpResponseRedirect(reverse('check_user'))
+    if BorrowInfo.objects.filter(brower_id=item.id) != None:
+        return render(request, 'management/error.html',
+                      {'message': 'The user still has not returned the book, can not be deleted'})
+    else:
+        item.user.delete()  # 别忘记删除User表的表项
+        item.delete()
+        return HttpResponseRedirect(reverse('check_user'))
 
 
-
-@user_passes_test(permission_check)
-def add_img(request):
-    user = request.user
-    state = None
-    if request.method == 'POST':
-        try:
-            new_img = Img(
-                    name=request.POST.get('name', ''),
-                    img=request.FILES.get('img', ''),
-                    book=Book.objects.get(pk=request.POST.get('book', ''))
-            )
-            new_img.save()
-        except Book.DoesNotExist as e:
-            state = 'error'
-            print(e)
-        else:
-            state = 'success'
-    content = {
-        'user': user,
-        'state': state,
-        'book_list': Book.objects.all().distinct(),
-        'active_menu': 'add_img',
-    }
-    return render(request, 'management/add_img.html', content)
+# @user_passes_test(permission_check)
+# def add_img(request):
+#     user = request.user
+#     state = None
+#     if request.method == 'POST':
+#         try:
+#             new_img = Img(
+#                     name=request.POST.get('name', ''),
+#                     img=request.FILES.get('img', ''),
+#                     book=Book.objects.get(pk=request.POST.get('book', ''))
+#             )
+#             new_img.save()
+#         except Book.DoesNotExist as e:
+#             state = 'error'
+#             print(e)
+#         else:
+#             state = 'success'
+#     content = {
+#         'user': user,
+#         'state': state,
+#         'book_list': Book.objects.all().distinct(),
+#         'active_menu': 'add_img',
+#     }
+#     return render(request, 'management/add_img.html', content)
 
 @user_passes_test(permission_check)
 def modify_fine(request):

@@ -31,7 +31,7 @@ def Init():
 
     # print('time_delta',time_delta)
 
-    if time_delta.days==1:
+    if time_delta.days >= 1:
         with open("E:\\code_in_school\\LibraryManagement\\config.json", 'w') as f:
             json.dump({'unit': unit, 'time': stamp+timedelta(days=1)}, f, cls=DateTimeEncoder)
 

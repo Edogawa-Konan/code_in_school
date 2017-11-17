@@ -22,7 +22,7 @@
 
                 <form method="POST" role="form" class="form-horizontal">
                     {% csrf_token %}
-                    <h1 class="form-signin-heading text-center">Please fill in the book id and username</h1>
+                    <h1 class="form-signin-heading text-center">Please fill in the book id and Student number</h1>
 
                     <div class="form-group">
                         <label for="id_book_id" class="col-md-3 control-label">Book_id：</label>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="id_user_name" class="col-md-3 control-label">User name：</label>
+                        <label for="id_user_name" class="col-md-3 control-label">Student number：</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="id_user_name" required name="username" autofocus>
                         </div>
