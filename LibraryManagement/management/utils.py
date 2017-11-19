@@ -22,7 +22,7 @@ class DateTimeEncoder(json.JSONEncoder):
 
 
 def Init():
-    with open("E:\\code_in_school\\LibraryManagement\\config.json",'r') as f:
+    with open("config.json", 'r') as f:
         source=json.load(f)
     unit=source['unit']
     stamp=datetime.strptime(source['time'],'%Y-%m-%d %H:%M:%S')
@@ -32,7 +32,7 @@ def Init():
     # print('time_delta',time_delta)
 
     if time_delta.days >= 1:
-        with open("E:\\code_in_school\\LibraryManagement\\config.json", 'w') as f:
+        with open(os.path.abspath("config.json"), 'w') as f:
             json.dump({'unit': unit, 'time': stamp+timedelta(days=1)}, f, cls=DateTimeEncoder)
 
         # if user!=None and user.myuser.permission<=1:

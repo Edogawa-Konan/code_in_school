@@ -5,6 +5,15 @@
 
 {% block content %}
 
+    <script type="text/javascript">
+        function show_confirm(user_id) {
+            var r = confirm("Are you sure you want to delete it?");
+            if (r == true) {
+                window.location.href = "{% url 'del_user' %}?user_id=" + user_id
+            }
+        }
+    </script>
+
         <h2 class="text-center">Sort by nickname</h2>
         <div class="container">
             <div class="row">
@@ -28,7 +37,10 @@
                             <td>{{ u.nickname }}</td>
                             <td>{{ u.user.email }}</td>
                             <td>{{ u.balance }}</td>
-                            <td><a class="btn btn-warning" href="{% url 'edit_user' u.id %}">Modify this user</a>&nbsp; &nbsp;<a class="btn btn-danger" href="{% url 'del_user' %}?user_id={{ u.id }}">Delete this user</a></td>
+
+                            <td><a class="btn btn-warning" href="{% url 'edit_user' u.id %}">Recharge</a>&nbsp;
+                                &nbsp;<input type="button" class="btn btn-danger" onclick="show_confirm({{ u.id }})"
+                                             value="Delete user"/></td>
                         </tr>
                      {% empty %}
                          <tr>There is no user yet!</tr>
@@ -39,5 +51,9 @@
                 </div>
             </div>
         </div>
+
+
+
+
 {% endblock %}
 

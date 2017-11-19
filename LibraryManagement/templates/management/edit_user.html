@@ -14,28 +14,28 @@
                 {% endif %}
                 <form method="POST" role="form" class="form-horizontal">
                     {% csrf_token %}
-                    <h1 class="form-signin-heading text-center">Modify the user</h1>
+                    <h1 class="form-signin-heading text-center">Balance recharge</h1>
 
-                    <div class="form-group">
-                        <label for="id_username" class="col-md-3 control-label">User name：</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" value="{{ user.user.username }}" id="id_username" required name="username" autofocus>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="id_nickname" class="col-md-3 control-label">nickname：</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" value="{{ user.nickname }}" required name="nickname" id="id_nickname">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="id_email" class="col-md-3 control-label">Email：</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" value="{{ user.user.email }}" required name="email" id="id_email">
-                        </div>
-                    </div>
+                    {#                    <div class="form-group">#}
+                    {#                        <label for="id_username" class="col-md-3 control-label">User name：</label>#}
+                    {#                        <div class="col-md-9">#}
+                    {#                            <input type="text" class="form-control" value="{{ user.user.username }}" id="id_username" required name="username" autofocus>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    {##}
+                    {#                    <div class="form-group">#}
+                    {#                        <label for="id_nickname" class="col-md-3 control-label">nickname：</label>#}
+                    {#                        <div class="col-md-9">#}
+                    {#                            <input type="text" class="form-control" value="{{ user.nickname }}" required name="nickname" id="id_nickname">#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    {##}
+                    {#                    <div class="form-group">#}
+                    {#                        <label for="id_email" class="col-md-3 control-label">Email：</label>#}
+                    {#                        <div class="col-md-9">#}
+                    {#                            <input type="text" class="form-control" value="{{ user.user.email }}" required name="email" id="id_email">#}
+                    {#                        </div>#}
+                    {#                    </div>#}
 
                     <div class="form-group">
                         <label for="id_recharge" class="col-md-3 control-label">Recharge：</label>

@@ -366,16 +366,16 @@ def edit_user(request,user_pk):
     item=MyUser.objects.get(pk=user_pk)
     state=None
     if request.method=='POST':
-        username=request.POST.get('username')
-        nickname=request.POST.get('nickname')
-        email=request.POST.get('email')
+        # username=request.POST.get('username')
+        # nickname=request.POST.get('nickname')
+        # email=request.POST.get('email')
         recharge=request.POST.get('recharge')
         # state=request.POST.get('state')
 
         item.balance+=int(recharge)
-        item.user.username=username
-        item.nickname=nickname
-        item.user.email=email
+        # item.user.username=username
+        # item.nickname=nickname
+        # item.user.email=email
 
         if item.balance>=100:
             item.permission=1
@@ -395,7 +395,7 @@ def edit_user(request,user_pk):
 def del_user(request):
     user_pk=request.GET.get('user_id')
     item=MyUser.objects.get(pk=user_pk)
-    if BorrowInfo.objects.filter(brower_id=item.id) != None:
+    if BorrowInfo.objects.filter(brower_id=item.id).count() != 0:
         return render(request, 'management/error.html',
                       {'message': 'The user still has not returned the book, can not be deleted'})
     else:
@@ -432,15 +432,15 @@ def del_user(request):
 @user_passes_test(permission_check)
 def modify_fine(request):
     content={'state':None}
+    with open("config.json", 'r') as f:
+        data = json.load(f)
     if request.method=='POST':
         unit=request.POST.get('unit')
-        with open("E:\\code_in_school\\LibraryManagement\\config.json", 'w') as f:
-            json.dump({'unit':unit},f)
+        with open("config.json", 'w') as f:
+            json.dump({'unit': unit, 'time': data['time']}, f)
         content['state']='success'
     else:
-        with open("E:\\code_in_school\\LibraryManagement\\config.json", 'r') as f:
-            unit = json.load(f)['unit']
-            content['unit'] = unit
+        content['unit'] = data['unit']
     return render(request,'management/modify_fine.html',content)
 
 
