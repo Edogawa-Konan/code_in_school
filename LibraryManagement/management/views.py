@@ -299,6 +299,7 @@ def borrowe(request):
         else:
             u = u[0]
             item = item[0]
+
             borrower = u.myuser
             if borrower.balance < 100:
                 content['message'] = 'Your balance is not enough, you can not borrow books'
@@ -308,7 +309,8 @@ def borrowe(request):
                 content['message'] = 'You can borrow up to two at the same time!'
             else:
                 delta = timedelta(days=30)
-                t = BorrowInfo(brower_id=borrower.id, book_id=book_id, dead_line=timezone.now() + delta)
+                t = BorrowInfo(brower_id=borrower.id, book_id=book_id, borrow_time=timezone.now(),
+                               dead_line=timezone.now() + delta)
                 t.save()
                 b = Book.objects.get(pk=book_id)
                 b.state = False

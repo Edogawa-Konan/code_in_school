@@ -1,4 +1,4 @@
-import os
+import os, pytz
 from django.utils import timezone
 from management.models import BorrowInfo,MyUser
 import json
@@ -24,45 +24,25 @@ class DateTimeEncoder(json.JSONEncoder):
 def Init():
     with open("config.json", 'r') as f:
         source=json.load(f)
-    unit=source['unit']
-    stamp=datetime.strptime(source['time'],'%Y-%m-%d %H:%M:%S')
+    unit = int(source['unit'])
+    stamp = datetime.strptime(source['time'], '%Y-%m-%d %H:%M:%S')  # 上次更新时间
 
-    time_delta=datetime.now()-stamp #距离上一次更新的时间
+    current = datetime.now()
+    time_delta = current - stamp  # 距离上一次更新的时间
 
-    # print('time_delta',time_delta)
 
     if time_delta.days >= 1:
         with open(os.path.abspath("config.json"), 'w') as f:
-            json.dump({'unit': unit, 'time': stamp+timedelta(days=1)}, f, cls=DateTimeEncoder)
+            json.dump({'unit': unit, 'time': datetime.now()}, f, cls=DateTimeEncoder)
 
-        # if user!=None and user.myuser.permission<=1:
-        #     borrow_info=BorrowInfo.objects.filter(brower_id=user.myuser.id)
-        #     total_fine=0
-        #     for info in borrow_info:
-        #         difference=(info.dead_line-timezone.now()).days #相差的天数
-        #         info.fine=-(difference)*unit
-        #         total_fine+=info.fine
-        #     user.myuser.balance+=total_fine
-        #     if user.myuser.balance < 100:  # 登录检测，钱不够滚蛋
-        #         user.myuser.permission = 0
-        #     user.myuser.save()
-
-        # elif user.myuser.permission>1:
         borrow_info=BorrowInfo.objects.all()
         for info in borrow_info:
-            info.fine-=unit
-            person=MyUser.objects.get(pk=info.brower_id)
-            person.balance+=info.fine
-            if person.balance<100:
-                person.permission=0
-            person.save()
-
-
-
-
-
-
-
-
-
-
+            if info.dead_line < current:
+                info.fine -= unit * (current - info.dead_line).days if info.dead_line > stamp else unit * (
+                current - stamp)
+                person = MyUser.objects.get(pk=info.brower_id)
+                person.balance += info.fine
+                if person.balance < 100:
+                    person.permission = 0
+                person.save()
+                info.save()

@@ -47,7 +47,7 @@ class Book(models.Model):
 class BorrowInfo(models.Model):
     brower_id =models.IntegerField()
     book_id= models.IntegerField()
-    borrow_time=models.DateTimeField(auto_now=True)
+    borrow_time = models.DateTimeField()
     fine=models.IntegerField(default=0)
     dead_line=models.DateTimeField()
 
