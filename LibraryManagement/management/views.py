@@ -290,30 +290,31 @@ def borrowe(request):
         book_id=request.POST.get('book_id')
         username=request.POST.get('username')
 
-        u=User.objects.filter(username=username)[0]
-        item=Book.objects.filter(pk=book_id)[0]
+        u = User.objects.filter(username=username)
+        item = Book.objects.filter(pk=book_id)
+        content['state'] = 'wrong'
 
-        borrower = u.myuser
-
-        content['state']='wrong'
-
-        if u==None or item==None:
+        if len(u) == 0 or len(item) == 0:
             content['message']='The book or user name is incorrect'
-        elif borrower.balance<100:
-            content['message']='Your balance is not enough, you can not borrow books'
-        elif item.state==False:
-            content['message'] = 'Sorry, the book has been lent!'
-        elif BorrowInfo.objects.filter(brower_id=borrower.id).count()==2:
-            content['message'] = 'You can borrow up to two at the same time!'
         else:
-            delta = timedelta(days=30)
-            t = BorrowInfo(brower_id=borrower.id, book_id=book_id, dead_line=timezone.now() + delta)
-            t.save()
-            b = Book.objects.get(pk=book_id)
-            b.state = False
-            b.save()
-            content['message'] = "Loan success"
-            content['state']='success'
+            u = u[0]
+            item = item[0]
+            borrower = u.myuser
+            if borrower.balance < 100:
+                content['message'] = 'Your balance is not enough, you can not borrow books'
+            elif item.state == False:
+                content['message'] = 'Sorry, the book has been lent!'
+            elif BorrowInfo.objects.filter(brower_id=borrower.id).count() == 2:
+                content['message'] = 'You can borrow up to two at the same time!'
+            else:
+                delta = timedelta(days=30)
+                t = BorrowInfo(brower_id=borrower.id, book_id=book_id, dead_line=timezone.now() + delta)
+                t.save()
+                b = Book.objects.get(pk=book_id)
+                b.state = False
+                b.save()
+                content['message'] = "Loan success"
+                content['state'] = 'success'
         return render(request,'management/borrow.html',content)
     return render(request,'management/borrow.html')
 
