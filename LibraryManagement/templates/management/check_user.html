@@ -38,7 +38,7 @@
                             <td>{{ u.user.email }}</td>
                             <td>{{ u.balance }}</td>
 
-                            <td><a class="btn btn-warning" href="{% url 'edit_user' u.id %}">Recharge</a>&nbsp;
+                            <td><a class="btn btn-info" href="{% url 'edit_user' u.id %}">Recharge</a>&nbsp;
                                 &nbsp;<input type="button" class="btn btn-danger" onclick="show_confirm({{ u.id }})"
                                              value="Delete user"/></td>
                         </tr>
