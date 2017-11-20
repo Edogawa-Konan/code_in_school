@@ -19,28 +19,36 @@
                     <div class="form-group">
                         <label for="id_name" class="col-md-3 control-label">Book name：</label>
                         <div class="col-md-9">
-                            <input type="text" value="{{ name }}" class="form-control" id="id_name" required name="name" autofocus>
+                            <input type="text" value="{{ name }}" class="form-control" id="id_name" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="name" autofocus>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_author" class="col-md-3 control-label">Author：</label>
                         <div class="col-md-9">
-                            <input type="text" value="{{ author }}" class="form-control" required name="author" id="id_author">
+                            <input type="text" value="{{ author }}" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="author" id="id_author">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_category" class="col-md-3 control-label">Category：</label>
                         <div class="col-md-9">
-                            <input type="text"  class="form-control" required name="category" id="id_category">
+                            <input type="text" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="category" id="id_category">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_price" class="col-md-3 control-label">price：</label>
                         <div class="col-md-9">
-                            <input type="text" value="{{ price }}" class="form-control" required name="price" id="id_price">
+                            <input type="text" value="{{ price }}" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="price" id="id_price">
                         </div>
                     </div>
 
@@ -48,9 +56,13 @@
                         <label for="id_pubdate" class="col-md-3 control-label">Publish date：</label>
                         <div class="col-md-9">
                             {% if pubdate  %}
-                                <input type="text" value="{{ pubdate }}" class="form-control" required name="publish_date" id="id_pubdate">
+                                <input type="text" value="{{ pubdate }}" class="form-control" required
+                                       oninvalid="setCustomValidity('Please enter this field')"
+                                       oninput="setCustomValidity('')" name="publish_date" id="id_pubdate">
                             {% else %}
-                                <input type="date"  class="form-control" required name="publish_date" id="id_pubdate">
+                                <input type="date" class="form-control" required
+                                       oninvalid="setCustomValidity('Please enter this field')"
+                                       oninput="setCustomValidity('')" name="publish_date" id="id_pubdate">
                             {% endif %}
                         </div>
                     </div>
@@ -58,21 +70,27 @@
                     <div class="form-group">
                         <label for="id_location" class="col-md-3 control-label">Location:</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" required name="location" id="id_location">
+                            <input type="text" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="location" id="id_location">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_number" class="col-md-3 control-label">number：</label>
                         <div class="col-md-9">
-                            <input type="text" value="1" class="form-control" required name="number" id="id_number">
+                            <input type="text" value="1" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="number" id="id_number">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_ISBN" class="col-md-3 control-label">ISBN:</label>
                         <div class="col-md-9">
-                            <input type="text" value="{{ ISBN }}" class="form-control" required name="ISBN" id="id_ISBN">
+                            <input type="text" value="{{ ISBN }}" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="ISBN" id="id_ISBN">
                         </div>
                     </div>
 

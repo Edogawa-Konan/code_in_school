@@ -342,7 +342,7 @@ def return_book(request):
         book_id=request.POST.get('book_id')
 
         t = BorrowInfo.objects.filter(book_id=book_id)
-        if t==None:
+        if len(t) == 0:
             content['state']='wrong'
             content['message']='Did not find the book'
         else:
