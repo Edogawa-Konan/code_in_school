@@ -1,17 +1,23 @@
 {% extends "management/base.html" %}
 {% load staticfiles %}
 
-{% block title %}Warning{% endblock %}
+{% block title %}Message{% endblock %}
 
 {% block content %}
 
-    <h2 class="text-center">You have encountered a problem</h2>
+    <h2 class="text-center">Notice</h2>
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+                {% if state == 'wrong' %}
                 <div class="bg-danger">
                     <h2 class="text-danger text-center">{{ message }}</h2>
                 </div>
+                {% else %}
+                    <div class="bg-success">
+                        <h2 class="text-success text-center">{{ message }}</h2>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,18 +1,19 @@
 import json
+from datetime import timedelta
 
-import requests, re
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+import re
+import requests
+from django.contrib import auth
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
-from django.contrib import auth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from management.models import MyUser,Book,BorrowInfo,Message
 from django.core.urlresolvers import reverse
-from management.utils import permission_check,Init
-from datetime import datetime,timedelta
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.utils import timezone
 
+from management.models import MyUser, Book, BorrowInfo, Message
+from management.utils import permission_check, Init
 
 
 def index(request):
@@ -119,32 +120,32 @@ def clear_message(request):
     return redirect('check_message')
 
 
-@user_passes_test(permission_check)
-def add_book(request,dic=None):
-    user = request.user
-    state = None
-    if request.method == 'POST':
-        N=request.POST.get('number','')
-        N=int(N)
-        for i in range(N):
-            new_book = Book(
-                    name=request.POST.get('name', ''),
-                    author=request.POST.get('author', ''),
-                    category=request.POST.get('category', ''),
-                    price=request.POST.get('price', 0),
-                    publish_date=request.POST.get('publish_date', ''),
-                    ISBN=request.POST.get('ISBN',''),
-                    location=request.POST.get('location',''),
-                    state=True,
-            )
-            new_book.save()
-            state = 'success'
-    content = {
-        'user': user,
-        'active_menu': 'add_book',
-        'state': state,
-    }
-    return render(request, 'management/add_book.html', content)
+# @user_passes_test(permission_check)
+# def add_book(request,dic=None):
+#     user = request.user
+#     state = None
+#     if request.method == 'POST':
+#         N=request.POST.get('number','')
+#         N=int(N)
+#         for i in range(N):
+#             new_book = Book(
+#                     name=request.POST.get('name', ''),
+#                     author=request.POST.get('author', ''),
+#                     category=request.POST.get('category', ''),
+#                     price=request.POST.get('price', 0),
+#                     publish_date=request.POST.get('publish_date', ''),
+#                     ISBN=request.POST.get('ISBN',''),
+#                     location=request.POST.get('location',''),
+#                     state=True,
+#             )
+#             new_book.save()
+#             state = 'success'
+#     content = {
+#         'user': user,
+#         'active_menu': 'add_book',
+#         'state': state,
+#     }
+#     return render(request, 'management/add_book.html', content)
 
 def douban(ISBN):
     url = 'https://api.douban.com/v2/book/isbn/:' + str(ISBN)
@@ -166,6 +167,7 @@ def add_book_by_ISBN(request):
     return render(request,'management/add_book_by_ISBN.html',{'active_menu':'add_book_by_ISBN'})
 
 
+
 @user_passes_test(permission_check)
 def confirm(request,ISBN):
     Dict=douban(ISBN)
@@ -185,7 +187,8 @@ def confirm(request,ISBN):
                 ISBN=ISBN
             )
             new_book.save()
-        return render(request,'management/add_book.html',{'state':'success'})
+
+        return render(request, 'management/message.html', {'state': 'success', 'message': 'added successfully'})
     return render(request,'management/add_book.html',Dict)
 
 
@@ -286,7 +289,6 @@ def borrowe(request):
     if request.method=='POST':
         book_id=request.POST.get('book_id')
         username=request.POST.get('username')
-
 
         u=User.objects.filter(username=username)[0]
         item=Book.objects.filter(pk=book_id)[0]
@@ -398,7 +400,7 @@ def del_user(request):
     user_pk=request.GET.get('user_id')
     item=MyUser.objects.get(pk=user_pk)
     if BorrowInfo.objects.filter(brower_id=item.id).count() != 0:
-        return render(request, 'management/error.html',
+        return render(request, 'management/message.html',
                       {'message': 'The user still has not returned the book, can not be deleted'})
     else:
         item.user.delete()  # 别忘记删除User表的表项

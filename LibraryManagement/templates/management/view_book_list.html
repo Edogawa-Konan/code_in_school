@@ -61,7 +61,7 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'detail' %}?id={{ book.id }}">{{ book.name }}</a></td>
                                 <td>{{ book.author }}</td>
-                                <td>{{ book.publish_date|date:"Y-m-d" }}</td>
+                                <td>{{ book.publish_date }}</td>
                                 <td>¥{{ book.price|floatformat:2 }}</td>
                                 {% if book.state == True %}
                                     <td>On the shelf</td>

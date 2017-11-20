@@ -16,7 +16,7 @@ class Book(models.Model):
     name = models.CharField(max_length=128)
     price = models.FloatField()
     author = models.CharField(max_length=128)
-    publish_date = models.DateField()
+    publish_date = models.CharField(max_length=128)
     category = models.CharField(max_length=128)
     location = models.CharField(max_length=128)
     state=models.BooleanField() #是否在馆
