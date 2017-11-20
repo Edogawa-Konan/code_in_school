@@ -1,6 +1,6 @@
 import json
 
-import requests
+import requests, re
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -177,11 +177,12 @@ def confirm(request,ISBN):
                 name=request.POST.get('name', ''),
                 author=request.POST.get('author', ''),
                 category=request.POST.get('category', ''),
-                price=request.POST.get('price', 0)[:-1],
+                price=re.search(r'\d+\.?\d*', request.POST.get('price', 0)).group(),
                 publish_date=request.POST.get('publish_date', ''),
                 location=request.POST.get('location', ''),
                 img=Dict['img'],
                 state=True,
+                ISBN=ISBN
             )
             new_book.save()
         return render(request,'management/add_book.html',{'state':'success'})
@@ -325,6 +326,7 @@ def my_library(request):
         book_list.append((Book.objects.get(pk=info.book_id),info.borrow_time,info.dead_line,info.fine))
     content = {
         'book_list': book_list,
+        'balance': user.myuser.balance,
         'active_menu': 'my_library'
     }
     return render(request,'management/my_library.html',content)

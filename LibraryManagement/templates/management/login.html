@@ -19,7 +19,9 @@
                     <div class="form-group">
                         <label for="id_user_name" class="col-md-3 control-label">User name：</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="id_user_name" required name="username"
+                            <input type="text" class="form-control" id="id_user_name" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="username"
                                    autofocus>
                         </div>
                     </div>
@@ -27,7 +29,9 @@
                     <div class="form-group">
                         <label for="id_password" class="col-md-3 control-label">Password：</label>
                         <div class="col-md-9">
-                            <input type="password" class="form-control" required name="password" id="id_password">
+                            <input type="password" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="password" id="id_password">
                         </div>
                     </div>
                     <div class="form-group">

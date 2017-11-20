@@ -31,7 +31,9 @@
                     <div class="form-group">
                         <label for="id_user_name" class="col-md-3 control-label">Student number:</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="id_user_name" required name="username"
+                            <input type="text" class="form-control" id="id_user_name" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="username"
                                    autofocus>
                             <span class="help-block">Username is your student ID</span>
                         </div>
@@ -40,14 +42,18 @@
                     <div class="form-group">
                         <label for="id_name" class="col-md-3 control-label">Nick name：</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" required name="nickname" id="id_name">
+                            <input type="text" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="nickname" id="id_name">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_passwd" class="col-md-3 control-label">Password：</label>
                         <div class="col-md-9">
-                            <input type="password" class="form-control" required name="password" id="id_passwd">
+                            <input type="password" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="password" id="id_passwd">
                             <span class="help-block">The password can be uppercase or lowercase letters and underscores</span>
                         </div>
                     </div>
@@ -55,7 +61,9 @@
                     <div class="form-group">
                         <label for="id_repasswd" class="col-md-3 control-label">Repeat</label>
                         <div class="col-md-9">
-                            <input type="password" class="form-control" required name="repeat_password"
+                            <input type="password" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="repeat_password"
                                    id="id_repasswd">
                         </div>
                     </div>
@@ -63,7 +71,9 @@
                     <div class="form-group">
                         <label for="id_email" class="col-md-3 control-label">Email：</label>
                         <div class="col-md-9">
-                            <input type="email" class="form-control" required name="email" id="id_email">
+                            <input type="email" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="email" id="id_email">
                         </div>
                     </div>
 

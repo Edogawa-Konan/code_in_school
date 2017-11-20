@@ -49,7 +49,7 @@
                     <h3>ISBN:{{ book.ISBN }}</h3>
                     <h3>Location:{{ book.location }}</h3>
                     <h3>Publish Date：{{ book.publish_date|date:"Y-m-d" }}</h3>
-                    <h3>Price：{{ book.price|floatformat:2 }}</h3>
+                    <h3>Price：¥{{ book.price|floatformat:2 }}</h3>
                     <h3>Id：{{ book.id }}</h3>
 
                     {% if user.myuser.permission > 1 %}

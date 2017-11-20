@@ -34,7 +34,9 @@
                     <div class="form-group">
                         <label for="id_location" class="col-md-2 control-label">Location:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" value="{{ book.location }}" required name="location" id="id_location">
+                            <input type="text" class="form-control" value="{{ book.location }}" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="location" id="id_location">
                         </div>
                     </div>
 

@@ -27,14 +27,18 @@
                     <div class="form-group">
                         <label for="id_book_id" class="col-md-3 control-label">Book_id：</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" required name="book_id" id="id_book_id">
+                            <input type="text" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="book_id" id="id_book_id">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_user_name" class="col-md-3 control-label">Student number：</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="id_user_name" required name="username" autofocus>
+                            <input type="text" class="form-control" id="id_user_name" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="username" autofocus>
                         </div>
                     </div>
 

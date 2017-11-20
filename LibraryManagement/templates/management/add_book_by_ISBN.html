@@ -15,7 +15,9 @@
                     <div class="form-group">
                         <label for="id_ISBN" class="col-md-3 control-label">ISBN：</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" required name="ISBN" id="id_ISBN">
+                            <input type="text" class="form-control" required
+                                   oninvalid="setCustomValidity('Please enter this field')"
+                                   oninput="setCustomValidity('')" name="ISBN" id="id_ISBN">
                         </div>
                     </div>
 
