@@ -1,5 +1,4 @@
-import os, pytz
-from django.utils import timezone
+import os
 from management.models import BorrowInfo,MyUser
 import json
 from datetime import datetime,date,timedelta
@@ -39,7 +38,7 @@ def Init():
         for info in borrow_info:
             if info.dead_line < current:
                 info.fine -= unit * (current - info.dead_line).days if info.dead_line > stamp else unit * (
-                current - stamp)
+                current - stamp).days
                 person = MyUser.objects.get(pk=info.brower_id)
                 person.balance += info.fine
                 if person.balance < 100:
